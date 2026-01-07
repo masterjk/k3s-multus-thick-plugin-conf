@@ -29,7 +29,7 @@ sudo rm -rf /var/lib/cni/multus/
 
 # Remove ipvlan and host-local plugins (if you want clean removal)
 sudo rm -f /var/lib/rancher/k3s/data/cni/ipvlan
-suro rm -f /var/lib/rancher/k3s/data/cni/multus-shim
+sudo rm -f /var/lib/rancher/k3s/data/cni/multus-shim
 sudo rm -f /var/lib/rancher/k3s/data/cni/passthru
 sudo rm -f /var/lib/rancher/k3s/data/cni/host-local
 
