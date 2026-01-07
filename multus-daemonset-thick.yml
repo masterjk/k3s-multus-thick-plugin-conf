@@ -115,7 +115,8 @@ data:
         "binDir": "/var/lib/rancher/k3s/data/cni",
         "multusAutoconfigDir": "/host/var/lib/rancher/k3s/agent/etc/cni/net.d",
         "multusConfigFile": "auto",
-        "socketDir": "/host/run/multus/"
+        "socketDir": "/host/run/multus/",
+        "metricsPort": 19090
     }
 ---
 apiVersion: apps/v1
@@ -152,6 +153,10 @@ spec:
         - name: kube-multus
           image: ghcr.io/k8snetworkplumbingwg/multus-cni:snapshot-thick
           command: [ "/usr/src/multus-cni/bin/multus-daemon" ]
+          ports:
+            - name: metrics
+              containerPort: 19090
+              protocol: TCP
           resources:
             requests:
               cpu: "100m"
@@ -289,3 +294,38 @@ spec:
         - name: multus-conf-dir
           hostPath:
             path: /etc/cni/multus/net.d
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: multus-http-metrics
+  namespace: kube-system
+  labels:
+    tier: node
+    app: multus
+spec:
+  selector:
+    name: multus
+  type: ClusterIP
+  ports:
+    - name: metrics
+      port: 19090
+      targetPort: metrics
+      protocol: TCP
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: multus-http-metrics
+  namespace: kube-system
+  labels:
+    tier: node
+    app: multus
+spec:
+  selector:
+    matchLabels:
+      app: multus
+  endpoints:
+  - port: metrics
+    interval: 20s
+    path: /metrics
