@@ -236,12 +236,12 @@ spec:
               echo "Installing containernetworking-plugins with ipvlan for K3s..."
               apk add --no-cache curl tar
               cd /tmp
-              PLUGINS_VERSION="v1.5.1"
+              PLUGINS_VERSION="v1.7.1"
               curl -sL https://github.com/containernetworking/plugins/releases/download/${PLUGINS_VERSION}/cni-plugins-linux-amd64-${PLUGINS_VERSION}.tgz | tar xzf -
-              cp ipvlan host-local /host/var/lib/rancher/k3s/data/cni/
-              chmod +x /host/var/lib/rancher/k3s/data/cni/ipvlan /host/var/lib/rancher/k3s/data/cni/host-local
-              ls -la /host/var/lib/rancher/k3s/data/cni/ | grep -E '(ipvlan|host-local)'
-              echo "ipvlan and host-local plugins installed successfully at /var/lib/rancher/k3s/data/cni/"
+              cp ipvlan /host/var/lib/rancher/k3s/data/cni/
+              chmod +x /host/var/lib/rancher/k3s/data/cni/ipvlan
+              ls -la /host/var/lib/rancher/k3s/data/cni/ | grep -E '(ipvlan)'
+              echo "ipvlan plugins installed successfully at /var/lib/rancher/k3s/data/cni/"
           resources:
             requests:
               cpu: "10m"

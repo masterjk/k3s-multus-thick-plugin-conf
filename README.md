@@ -56,7 +56,6 @@ After deploying the Multus thick plugin, the following changes occur on each K3s
 ```
 /var/lib/rancher/k3s/data/cni/
 ├── ipvlan                    [NEW - from init container]
-├── host-local                [OVERWRITTEN - from init container]
 ├── multus-shim               [NEW - from init container]
 ├── passthru                  [NEW - from init container]
 ├── bandwidth                 [existing symlink, unchanged]
@@ -64,6 +63,7 @@ After deploying the Multus thick plugin, the following changes occur on each K3s
 ├── cni                       [existing symlink, unchanged]
 ├── firewall                  [existing symlink, unchanged]
 ├── flannel                   [existing symlink, unchanged]
+├── host-local                [existing symlink, unchanged]
 ├── loopback                  [existing symlink, unchanged]
 └── portmap                   [existing symlink, unchanged]
 ```
