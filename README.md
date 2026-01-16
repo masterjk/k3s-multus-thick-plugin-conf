@@ -34,14 +34,10 @@ Then manually clean up host-side resources on each node:
 sudo rm -rf /run/multus/
 sudo rm -rf /var/lib/cni/multus/
 
-# Remove ipvlan and host-local plugins (if you want clean removal)
+# Remove ipvlan plugins (if you want clean removal)
 sudo rm -f /var/lib/rancher/k3s/data/cni/ipvlan
 sudo rm -f /var/lib/rancher/k3s/data/cni/multus-shim
 sudo rm -f /var/lib/rancher/k3s/data/cni/passthru
-sudo rm -f /var/lib/rancher/k3s/data/cni/host-local
-
-# Restore host-local
-sudo ln -s $(readlink /var/lib/rancher/k3s/data/cni/flannel) /var/lib/rancher/k3s/data/cni/host-local
 
 # Remove Multus CNI config (should already be removed)
 sudo rm -f /var/lib/rancher/k3s/agent/etc/cni/net.d/00-multus.conf
@@ -56,7 +52,6 @@ After deploying the Multus thick plugin, the following changes occur on each K3s
 ```
 /var/lib/rancher/k3s/data/cni/
 ├── ipvlan                    [NEW - from init container]
-├── host-local                [OVERWRITTEN - from init container]
 ├── multus-shim               [NEW - from init container]
 ├── passthru                  [NEW - from init container]
 ├── bandwidth                 [existing symlink, unchanged]
@@ -64,6 +59,7 @@ After deploying the Multus thick plugin, the following changes occur on each K3s
 ├── cni                       [existing symlink, unchanged]
 ├── firewall                  [existing symlink, unchanged]
 ├── flannel                   [existing symlink, unchanged]
+├── host-local                [existing symlink, unchanged]
 ├── loopback                  [existing symlink, unchanged]
 └── portmap                   [existing symlink, unchanged]
 ```
