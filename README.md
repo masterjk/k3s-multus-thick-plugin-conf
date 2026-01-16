@@ -34,14 +34,10 @@ Then manually clean up host-side resources on each node:
 sudo rm -rf /run/multus/
 sudo rm -rf /var/lib/cni/multus/
 
-# Remove ipvlan and host-local plugins (if you want clean removal)
+# Remove ipvlan plugins (if you want clean removal)
 sudo rm -f /var/lib/rancher/k3s/data/cni/ipvlan
 sudo rm -f /var/lib/rancher/k3s/data/cni/multus-shim
 sudo rm -f /var/lib/rancher/k3s/data/cni/passthru
-sudo rm -f /var/lib/rancher/k3s/data/cni/host-local
-
-# Restore host-local
-sudo ln -s $(readlink /var/lib/rancher/k3s/data/cni/flannel) /var/lib/rancher/k3s/data/cni/host-local
 
 # Remove Multus CNI config (should already be removed)
 sudo rm -f /var/lib/rancher/k3s/agent/etc/cni/net.d/00-multus.conf
